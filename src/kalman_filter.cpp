@@ -62,8 +62,12 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   auto vy = x_[3];
   double rho = sqrt(px * px + py * py);
   double theta = atan2(py, px);
-  if (fabs(rho) < 0.0001) {
-    rho = 0.0001;
+  if (fabs(rho) < 0.0000001) {
+    if (rho > 0.0) {
+      rho = 0.0000001;
+    } else {
+      rho = -0.0000001;
+    }
   }
   double rho_dot = (px * vx + py * vy) / rho;
   
